@@ -1,0 +1,1 @@
+# Belenar-Workshop.EventSourcedCsharp.NDCOslo2023
