@@ -1,11 +1,19 @@
 ﻿namespace BeerSender.Domain.Box.Commands;
 
-public record Select_box_size(int Number_of_bottles);
+public interface Command
+{
+    Guid AggregateId { get; }
+}
 
-public record Add_shipping_label(Guid BoxId, Shipping_label Shipping_label);
+public record Select_box_size(Guid AggregateId, int Number_of_bottles) : Command;
 
-public record Add_beer_to_box(Guid BoxId);
+public record Add_shipping_label(
+    Guid AggregateId, 
+    string Carrier, 
+    string Tracking_code) : Command;
 
-public record Close_box(Guid BoxId);
+public record Add_beer_to_box(Guid AggregateId) : Command;
 
-public record Ship_box(Guid BoxId);
+public record Close_box(Guid AggregateId) : Command;
+
+public record Ship_box(Guid AggregateId) : Command;
