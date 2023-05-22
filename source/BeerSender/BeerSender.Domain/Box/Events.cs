@@ -8,7 +8,7 @@ public record Box_failed_to_create(Box_size_exception.Fail_reason Reason);
 
 public record Shipping_label_added(Shipping_label Shipping_label);
 
-public record Beer_added_to_box;
+public record Beer_added_to_box(Beer_bottle Bottle);
 
 public record Add_beer_to_box_failed(Add_beer_to_box_exception.Fail_reason Reason);
 
