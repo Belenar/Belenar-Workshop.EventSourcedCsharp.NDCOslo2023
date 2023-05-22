@@ -22,7 +22,7 @@ public class Box : Aggregate
         Created = true;
     }
 
-    public void Apply(Box_failed_to_create @event)
+    public void Apply(Box_could_not_be_created @event)
     {
         Created = false;
     }
@@ -32,12 +32,16 @@ public class Box : Aggregate
         Shipping_label = @event.Shipping_label;
     }
 
-    public void Apply(Beer_added_to_box @event)
+    public void Apply(Shipping_label_could_not_be_created @event)
+    {
+    }
+
+    public void Apply(Beer_added @event)
     {
         Bottles.Add(@event.Bottle);
     }
 
-    public void Apply(Add_beer_to_box_failed @event)
+    public void Apply(Beer_could_not_be_added @event)
     {
     }
     
@@ -46,7 +50,7 @@ public class Box : Aggregate
         Is_closed = true;
     }
     
-    public void Apply(Box_cannot_be_closed @event)
+    public void Apply(Box_could_not_be_closed @event)
     {
         Is_closed = true;
     }
@@ -56,7 +60,7 @@ public class Box : Aggregate
         Is_shipped = true;
     }
 
-    public void Apply(Box_not_ready_to_be_shipped @event)
+    public void Apply(Box_could_not_be_shipped @event)
     {
     }
 }

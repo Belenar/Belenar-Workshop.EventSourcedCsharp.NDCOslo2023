@@ -23,8 +23,8 @@ public abstract class Command_test
         command_router.Handle_command(command);
     }
 
-    protected void Then(params object[] new_events)
+    protected void Then(params object[] expected_events)
     {
-        _published_events.Should().BeEquivalentTo(new_events);
+        _published_events.Should().BeEquivalentTo(expected_events);
     }
 }

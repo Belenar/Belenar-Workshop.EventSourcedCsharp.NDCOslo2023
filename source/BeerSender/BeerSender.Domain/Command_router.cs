@@ -21,8 +21,24 @@ public class Command_router
         switch (command)
         {
             case Select_box_size select_box_size:
-                var handler = new Select_box_size_handler(_event_stream, _publish_event);
-                handler.Handle(select_box_size);
+                new Select_box_size_handler(_event_stream, _publish_event)
+                    .Handle(select_box_size);
+                break;
+            case Add_shipping_label add_shipping_label:
+                new Add_shipping_label_handler(_event_stream, _publish_event)
+                    .Handle(add_shipping_label);
+                break;
+            case Add_beer add_beer_to_box:
+                new Add_beer_to_box_handler(_event_stream, _publish_event)
+                    .Handle(add_beer_to_box);
+                break;
+            case Close_box close_box:
+                new Close_box_handler(_event_stream, _publish_event)
+                    .Handle(close_box);
+                break;
+            case Ship_box ship_box:
+                new Ship_box_handler(_event_stream, _publish_event)
+                    .Handle(ship_box);
                 break;
         }
     }
