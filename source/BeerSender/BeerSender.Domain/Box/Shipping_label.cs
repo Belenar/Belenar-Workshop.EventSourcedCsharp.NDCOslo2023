@@ -28,6 +28,11 @@ public record Shipping_label
                 break;
         }
 
+        if (string.IsNullOrEmpty(tracking_code))
+        {
+            throw new Shipping_label_exception(Fail_reason.Invalid_tracking_code);
+        }
+
         return new Shipping_label(carrier_enum, tracking_code);
     }
 }

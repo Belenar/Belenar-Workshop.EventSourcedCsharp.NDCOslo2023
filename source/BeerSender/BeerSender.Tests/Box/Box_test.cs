@@ -1,6 +1,7 @@
 using BeerSender.Domain.Box;
 using BeerSender.Domain.Box.Commands;
 using BeerSender.Domain.Box.Events;
+using BeerSender.Domain.Box.Exceptions;
 
 namespace BeerSender.Tests.Box;
 
@@ -32,6 +33,11 @@ public class Box_test : Command_test
     protected Shipping_label_added Shipping_label_is_added(string carrier, string tracking_code)
     {
         return new Shipping_label_added(Shipping_label.Create(carrier, tracking_code));
+    }
+    
+    protected Add_shipping_label_failed Add_shipping_label_has_failed(Fail_reason reason)
+    {
+        return new Add_shipping_label_failed(reason);
     }
     #endregion
 }
