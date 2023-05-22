@@ -12,7 +12,7 @@ public record Add_shipping_label(
     string Carrier, 
     string Tracking_code) : Command;
 
-public record Add_beer_to_box(Guid AggregateId) : Command;
+public record Add_beer_to_box(Guid AggregateId, string Brewery, string Name, decimal Percentage) : Command;
 
 public record Close_box(Guid AggregateId) : Command;
 
