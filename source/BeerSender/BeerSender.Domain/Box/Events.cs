@@ -1,7 +1,5 @@
 namespace BeerSender.Domain.Box
 {
-
-    
     public record Box_selected(Box_size Box_size);
     public record Box_failed_to_select_box(BoxException Ex);
 
@@ -15,7 +13,7 @@ namespace BeerSender.Domain.Box
 
     public record Could_not_ship_box(BoxException Ex);
     
-    public record Added_beer_to_box;
+    public record Added_beer_to_box(Beer beer);
     public record Fail_to_add_beer_to_box(BoxException Ex);
     
     

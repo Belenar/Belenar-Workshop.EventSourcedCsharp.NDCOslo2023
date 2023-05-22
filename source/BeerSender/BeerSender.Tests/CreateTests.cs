@@ -2,7 +2,7 @@ using BeerSender.Domain.Box;
 
 namespace BeerSender.Tests
 {
-    public class UnitTest1
+    public class CreateTests
     {
 
         [Fact]

@@ -4,8 +4,11 @@ public class Box : Aggregate
 {
     public Box_size box_size { get; private set; }
     public bool Box_is_closed { get; private set; }
-    public Shipping_label Box_label { get; private set; }
-    public Shipment_identifier Shipment_identifier { get; private set; }
+    public Shipping_label? Box_label { get; private set; }
+    public Shipment_identifier? Shipment_identifier { get; private set; }
+    public IList<Beer> bottles { get; private set; } = new List<Beer>();
+    public bool IsShipped { get; private set; }
+    
     
     public void Apply(object @event)
     {
@@ -31,13 +34,12 @@ public class Box : Aggregate
     public void Apply(Box_shipped @event)
     {
         Shipment_identifier = @event.Shipment_identifier;
+        IsShipped = true;
     }
-
-    public int Number_of_beers { get; private set; }
-
+    
     public void Apply(Added_beer_to_box @event)
     { 
-        Number_of_beers++;
+        bottles.Add(@event.beer);
     }
     
     public void Apply(BoxException @event)

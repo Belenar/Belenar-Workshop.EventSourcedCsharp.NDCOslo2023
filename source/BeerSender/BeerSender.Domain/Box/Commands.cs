@@ -5,7 +5,7 @@ public interface Command
     Guid AggregateId { get; }
 }
 
-public record Select_box_type(Guid AggregateId, int Number_of_bottles) : Command;
+public record Select_box_size(Guid AggregateId, int Number_of_bottles) : Command;
 
 public record Close_box(Guid AggregateId): Command;
 
