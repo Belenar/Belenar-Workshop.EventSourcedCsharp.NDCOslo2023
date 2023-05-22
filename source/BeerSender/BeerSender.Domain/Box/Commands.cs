@@ -1,13 +1,16 @@
 ﻿namespace BeerSender.Domain.Box.Commands;
 
-public readonly record struct Select_box_size(int Number_of_bottles);
+public interface ICommand
+{
+    Guid Aggregate_id { get; }
+}
 
-public readonly record struct Add_shipping_label(Guid Box_id, string Carrier, string Tracking_code);
+public readonly record struct Select_box_size(Guid Aggregate_id, int Number_of_bottles) : ICommand;
 
-// Howto check "Box is full?"
-public readonly record struct Add_beer_to_box(Guid Box_id, string Name);
+public readonly record struct Add_shipping_label(Guid Aggregate_id, string Carrier, string Tracking_code) : ICommand;
 
-// Howto check "Beer in box?"
-public readonly record struct Close_box(Guid Box_id);
+public readonly record struct Add_beer_to_box(Guid Aggregate_id, string Name) : ICommand;
 
-public readonly record struct Ship_box(Guid Box_id);
+public readonly record struct Close_box(Guid Aggregate_id) : ICommand;
+
+public readonly record struct Ship_box(Guid Aggregate_id) : ICommand;

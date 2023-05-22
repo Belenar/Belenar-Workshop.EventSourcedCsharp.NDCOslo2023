@@ -8,13 +8,14 @@ public class Box_exception : Exception
     {
         _reason = reason;
     }
+}
 
-    public enum Fail_reason
-    {
-        Invalid_box_size,
-        Empty_box,
-        Box_not_ready
-    }
+public enum Fail_reason
+{
+    Invalid_box_size,
+    Empty_box,
+    Box_not_ready,
+    Invalid_beer_name
 }
 
 public class Beer_exception : Exception
@@ -24,10 +25,5 @@ public class Beer_exception : Exception
     public Beer_exception(Fail_reason reason)
     {
         _reason = reason;
-    }
-
-    public enum Fail_reason
-    {
-        Invalid_beer_name
     }
 }
