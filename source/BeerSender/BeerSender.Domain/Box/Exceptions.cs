@@ -2,11 +2,11 @@
 
 public class Box_exception : Exception
 {
-    private readonly Fail_reason _reason;
+    public Fail_reason Reason { get; }
 
     public Box_exception(Fail_reason reason)
     {
-        _reason = reason;
+        Reason = reason;
     }
 }
 
@@ -20,10 +20,10 @@ public enum Fail_reason
 
 public class Beer_exception : Exception
 {
-    private readonly Fail_reason _reason;
+    public Fail_reason Reason { get; }
 
     public Beer_exception(Fail_reason reason)
     {
-        _reason = reason;
+        Reason = reason;
     }
 }
