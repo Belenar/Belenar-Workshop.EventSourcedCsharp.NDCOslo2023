@@ -1,4 +1,6 @@
-﻿namespace BeerSender.Domain.Box;
+﻿using BeerSender.Domain.Box.Exceptions;
+
+namespace BeerSender.Domain.Box;
 
 public class Box_size
 {
@@ -19,6 +21,6 @@ public class Box_size
                 return new(number_of_bottles);
         }
 
-        throw new Exception("Invalid number of bottles.");
+        throw new Box_size_exception(Box_size_exception.Fail_reason.Invalid_box_size);
     }
 }
