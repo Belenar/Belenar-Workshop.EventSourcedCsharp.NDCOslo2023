@@ -22,9 +22,13 @@ public class Command_router
         switch (command)
         {
             case Select_box_size select_box_size:
-                var handler = new Select_box_size_handler(_event_stream, _publish_event);
-                handler.Handle(select_box_size);
+                new Select_box_size_handler(_event_stream, _publish_event).Handle(select_box_size);
                 break;
+            case Add_shipping_label add_shipping_label:
+                new Add_shipping_label_handler(_event_stream, _publish_event).Handle(add_shipping_label);
+                break;
+            default:
+                throw new ApplicationException($"Unhandled command {command}");
         }
     }
 }

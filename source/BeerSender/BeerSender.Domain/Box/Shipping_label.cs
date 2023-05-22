@@ -1,4 +1,6 @@
-﻿namespace BeerSender.Domain.Box;
+﻿using BeerSender.Domain.Box.Exceptions;
+
+namespace BeerSender.Domain.Box;
 
 public record Shipping_label
 {
@@ -15,15 +17,14 @@ public record Shipping_label
     {
         if (!Enum.TryParse<Carrier>(carrier, out var carrier_enum))
         {
-            // TODO: Maybe should be a business exception?
-            throw new Exception("Invalid carrier.");
+            throw new Shipping_label_exception(Fail_reason.Invalid_carrier);
         }
 
         switch (carrier_enum)
         {
             case Carrier.PostNL:
                 if (!tracking_code.StartsWith("NL"))
-                    throw new Exception("Invalid tracking code");
+                    throw new Shipping_label_exception(Fail_reason.Invalid_tracking_code);
                 break;
         }
 
