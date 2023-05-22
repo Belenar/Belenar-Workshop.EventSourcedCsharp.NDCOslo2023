@@ -1,48 +1,39 @@
-namespace BeerSender.Domain.Box.Exceptions;
+namespace BeerSender.Domain.Box;
 
-public class Box_size_exception : Exception
+
+public class BoxException : Exception
 {
-    public Reason ErrorReason { get; }
+    public readonly string Reason;
 
-    public Box_size_exception(Reason errorReason)
+    public BoxException(string reason)
     {
-        ErrorReason = errorReason;
-    }
-    public enum Reason
-    {
-        Invalid_box_size
+        Reason = reason;
     }
 }
 
-public class Box_close_exception : Exception
+public enum Box_select_reason
 {
-    public Reason ErrorReason { get; }
-
-    public Box_close_exception(Reason errorReason)
-    {
-        ErrorReason = errorReason;
-    }
-
-    public enum Reason
-    {
-        Box_is_not_full,
-        Box_is_tool_full,
-        Box_is_broken
-    }
+    Invalid_box_size
 }
 
-
-public class Box_ship_exception : Exception
+public enum Box_close_reason
 {
-    public Reason ErrorReason { get; }
+    Box_is_not_full,
+    Box_is_tool_full,
+    Box_is_broken
+}
 
-    public Box_ship_exception(Reason errorReason)
-    {
-        ErrorReason = errorReason;
-    }
+public enum Box_ship_reason
+{
+    Box_is_not_ready,
+}
+public enum Box_label_reason
+{
+    Label_is_not_valid,
+}
 
-    public enum Reason
-    {
-        Box_is_not_ready,
-    }
+public enum Box_add_reason
+{
+    Box_is_full,
+    Box_is_broken
 }

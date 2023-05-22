@@ -1,5 +1,4 @@
 using BeerSender.Domain.Box;
-using BeerSender.Domain.Box.Exceptions;
 
 namespace BeerSender.Tests
 {
@@ -34,7 +33,8 @@ namespace BeerSender.Tests
         public void Box_size_test()
         {
             var beer = () => new Box_size(1000);
-            Assert.Throws<Box_size_exception>(beer);
+            var ex  = Assert.Throws<BoxException>(beer);
+            Assert.Equal(ex.Reason,Box_select_reason.Invalid_box_size.ToString());
         }
     }
 }
