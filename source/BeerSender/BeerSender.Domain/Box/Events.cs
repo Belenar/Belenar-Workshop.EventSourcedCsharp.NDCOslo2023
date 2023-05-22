@@ -2,6 +2,12 @@
 
 namespace BeerSender.Domain.Box.Events;
 
-public record Box_created(Box_size Size);
+public record Beer_base_event();
 
-public record Box_failed_to_create(Box_size_exception.Fail_reason Reason);
+public record Box_created(Box_size Size) : Beer_base_event;
+
+public record Box_failed_to_create(Box_size_exception.Fail_reason Reason) : Beer_base_event;
+
+public record Shipping_label_added(Box_id Box_Id) : Beer_base_event;
+
+public record Box_closed(Box_id Box_Id) : Beer_base_event;
