@@ -5,23 +5,28 @@ namespace BeerSender.Tests;
 
 public abstract class Command_test
 {
-    protected List<object> _past_events = new();
-    protected List<object> _published_events = new();
+    private readonly List<Event> _published_events = new();
+    private List<Event> _past_events = new();
 
-    protected void Given(params object[] events)
+    protected void Given(params Event[] events)
     {
         _past_events = events.ToList();
     }
 
-    protected void When(Command command)
+    protected void When(params Command[] commands)
     {
-        var command_router = new Command_router(_=> _past_events, (_, ev) => _published_events.Add(ev));
-        command_router.Handle_command(command);
+        var command_router = new Command_router(_ => _past_events, (_, ev) => _published_events.Add(ev));
+        foreach (var command in commands)
+        {
+            command_router.Handle_command(command);
+        }
     }
 
-    protected void Then(params object[] new_events)
+    protected void Then(params Event[] new_events)
     {
-        _published_events.Should().BeEquivalentTo(new_events);
+        if (new_events.Length == 1)
+            _published_events[0].Should().Be(new_events[0]);
+        else
+            _published_events.Should().BeEquivalentTo(new_events, options => options.RespectingRuntimeTypes());
     }
-    
 }

@@ -15,4 +15,3 @@ public class EventHub : Hub
         await Groups.AddToGroupAsync(Context.ConnectionId, aggregate_id.ToString());
     }
 }
-

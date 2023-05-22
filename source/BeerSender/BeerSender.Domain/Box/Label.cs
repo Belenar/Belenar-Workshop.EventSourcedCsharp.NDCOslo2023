@@ -1,11 +1,12 @@
 namespace BeerSender.Domain.Box;
-public record Shipping_label
+
+public record Label
 {
-    public Shipping_label(string carrier, string tracking_code)
+    public Label(string carrier, string tracking_code)
     {
         if (!Enum.TryParse<Carriers>(carrier, out var carriers))
             throw new ArgumentOutOfRangeException(nameof(carrier));
-        
+
         Carrier = carriers;
         Tracking_code = tracking_code;
     }
