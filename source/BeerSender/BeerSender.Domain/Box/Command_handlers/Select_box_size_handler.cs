@@ -15,11 +15,11 @@ public class Select_box_size_handler : Command_handler<Select_box_size, Box>
         try
         {
             var size = Box_size.Create(command.Number_of_bottles);
-            return new [] {new Box_created(size)};
+            return new [] { new Box_created(size) };
         }
         catch (Box_size_exception ex)
         {
-            return new[] { new Box_failed_to_create(ex.Reason)};
+            return new[] { new Box_failed_to_create(ex.Reason) };
         }
     }
 }

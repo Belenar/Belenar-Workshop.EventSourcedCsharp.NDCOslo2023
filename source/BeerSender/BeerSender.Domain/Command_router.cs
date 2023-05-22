@@ -1,4 +1,5 @@
-﻿using BeerSender.Domain.Box.Commands;
+﻿using BeerSender.Domain.Box.Command_handlers;
+using BeerSender.Domain.Box.Commands;
 
 namespace BeerSender.Domain;
 
@@ -17,7 +18,13 @@ public class Command_router
 
     public void Handle_command(Command command)
     {
-
+        switch (command)
+        {
+            case Select_box_size select_box_size:
+                var handler = new Select_box_size_handler(_event_stream, _publish_event);
+                handler.Handle(select_box_size);
+                break;
+        }
     }
 }
 
