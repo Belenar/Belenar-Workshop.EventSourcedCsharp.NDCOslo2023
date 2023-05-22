@@ -27,7 +27,7 @@ public record Shipping_label
                 break;
         }
 
-        return new(carrier_enum, tracking_code);
+        return new Shipping_label(carrier_enum, tracking_code);
     }
 }
 
