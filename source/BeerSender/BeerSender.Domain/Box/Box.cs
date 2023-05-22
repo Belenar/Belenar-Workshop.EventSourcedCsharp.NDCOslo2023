@@ -2,7 +2,7 @@
 
 namespace BeerSender.Domain.Box;
 
-internal class Box : Aggregate
+public class Box : Aggregate
 {
     public Box_size? Box_size { get; private set; }
     public bool Created { get; private set; }

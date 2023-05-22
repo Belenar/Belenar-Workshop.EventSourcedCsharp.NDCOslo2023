@@ -1,6 +1,6 @@
 ﻿namespace BeerSender.Domain;
 
-internal interface Aggregate
+public interface Aggregate
 {
     void Apply(object @event);
 }
