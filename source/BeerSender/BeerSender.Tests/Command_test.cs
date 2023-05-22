@@ -6,19 +6,19 @@ namespace BeerSender.Tests;
 
 public abstract class Command_test
 {
-    private List<object> _pastEvents = new();
+    private List<object> _past_events = new();
     private readonly List<object> _published_events = new();
 
 
     protected void Given(params object[] existing_events)
     {
-        _pastEvents = existing_events.ToList();
+        _past_events = existing_events.ToList();
     }
 
     protected void When(Command command)
     {
         var command_router = new Command_router(
-            _ => _pastEvents,
+            _ => _past_events,
             (_, ev) => _published_events.Add(ev));
 
         command_router.Handle_command(command);

@@ -24,7 +24,7 @@ public abstract class Command_handler<TCommand, TAggregate>
 
         foreach (var @event in events)
         {
-            aggregate.Apply(@event);
+            aggregate.Apply((dynamic)@event);
         }
 
         var new_events = Handle_command(aggregate, command);
