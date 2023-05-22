@@ -17,10 +17,10 @@ public abstract class Command_handler<TCommand, TAggregate>
         _publish_event = publish_event;
     }
 
-    public void Handle(Guid aggregate_id, TCommand command)
+    public void Handle(TCommand command)
     {
         var aggregate = new TAggregate();
-        var events = _event_stream(aggregate_id);
+        var events = _event_stream(command.AggregateId);
 
         foreach (var @event in events)
         {
@@ -31,7 +31,7 @@ public abstract class Command_handler<TCommand, TAggregate>
 
         foreach (var new_event in new_events)
         {
-            _publish_event(aggregate_id, new_event);
+            _publish_event(command.AggregateId, new_event);
         }
     }
 
