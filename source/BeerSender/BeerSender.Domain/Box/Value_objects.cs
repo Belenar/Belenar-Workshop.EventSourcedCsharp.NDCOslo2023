@@ -1,4 +1,6 @@
-﻿namespace BeerSender.Domain.Box;
+﻿using BeerSender.Domain.Box.Exceptions;
+
+namespace BeerSender.Domain.Box;
 
 public record Shipping_label
 {
@@ -37,3 +39,39 @@ public enum Carrier
     PostNL,
     Posten
 }
+
+public record Box_id(int Id)
+{
+    private static int currentId = 0;
+
+    public static Box_id Next()
+    {
+        currentId += 1;
+        return new Box_id(currentId);
+    }
+}
+
+public class Box_size
+{
+    public int Number_of_bottles { get; }
+
+    private Box_size(int number_of_bottles)
+    {
+        Number_of_bottles = number_of_bottles;
+    }
+
+    public static Box_size Create(int number_of_bottles)
+    {
+        switch (number_of_bottles)
+        {
+            case 6:
+            case 12:
+            case 24:
+                return new(number_of_bottles);
+        }
+
+        throw new Box_size_exception(Box_size_exception.Fail_reason.Invalid_box_size);
+    }
+}
+
+public record Beer_bottle(string Name);
