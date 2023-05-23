@@ -1,4 +1,8 @@
+using BeerSender.Domain;
+using BeerSender.Web.EventStore;
 using BeerSender.Web.Hubs;
+using BeerSender.Web.JsonHelpers;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,11 +12,19 @@ builder.Services.AddSignalR();
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
-        // Add JSON options here
+        options.JsonSerializerOptions.Converters.Add(new CommandConverter());
     });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<EventContext>(opt => opt.UseSqlite("Data Source=events.db"));
+builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<Command_router>(provider =>
+{
+    var eventService = provider.GetRequiredService<IEventService>();
+    return new Command_router(eventService.GetEvents, eventService.WriteEvent);
+});
 
 var app = builder.Build();
 
