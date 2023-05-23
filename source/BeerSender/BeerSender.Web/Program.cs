@@ -1,4 +1,7 @@
+using BeerSender.Web.EventStore;
 using BeerSender.Web.Hubs;
+using BeerSender.Web.JsonHelpers;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,10 +12,13 @@ builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
         // Add JSON options here
+        options.JsonSerializerOptions.Converters.Add(new Command_converter());
     });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<Event_context>(opt => opt.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=EventStore;Integrated Security=True;"));
 
 var app = builder.Build();
 
