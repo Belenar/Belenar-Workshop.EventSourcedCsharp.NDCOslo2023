@@ -2,12 +2,12 @@ namespace BeerSender.Domain.Box.Command_handlers;
 
 public class Select_box_size_handler : Command_handler<Select_box_size, Box>
 {
-    public Select_box_size_handler(Func<Guid, IEnumerable<Event>> event_stream, Action<Guid, Event> publish_event) :
+    public Select_box_size_handler(Func<Guid, IEnumerable<MyEvent>> event_stream, Action<Guid, MyEvent> publish_event) :
         base(event_stream, publish_event)
     {
     }
 
-    public override IEnumerable<Event> Handle_command(Box aggregate, Select_box_size command)
+    public override IEnumerable<MyEvent> Handle_command(Box aggregate, Select_box_size command)
     {
         try
         {

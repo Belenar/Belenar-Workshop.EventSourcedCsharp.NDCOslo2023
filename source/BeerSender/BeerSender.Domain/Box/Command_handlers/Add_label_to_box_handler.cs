@@ -2,12 +2,12 @@ namespace BeerSender.Domain.Box.Command_handlers;
 
 public class Add_label_to_box_handler : Command_handler<Add_label_to_box, Box>
 {
-    public Add_label_to_box_handler(Func<Guid, IEnumerable<Event>> event_stream, Action<Guid, Event> publish_event) :
+    public Add_label_to_box_handler(Func<Guid, IEnumerable<MyEvent>> event_stream, Action<Guid, MyEvent> publish_event) :
         base(event_stream, publish_event)
     {
     }
 
-    public override IEnumerable<Event> Handle_command(Box aggregate, Add_label_to_box command)
+    public override IEnumerable<MyEvent> Handle_command(Box aggregate, Add_label_to_box command)
     {
         try
         {

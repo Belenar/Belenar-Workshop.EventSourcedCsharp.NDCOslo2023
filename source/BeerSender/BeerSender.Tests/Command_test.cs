@@ -5,10 +5,10 @@ namespace BeerSender.Tests;
 
 public abstract class Command_test
 {
-    private readonly List<Event> _published_events = new();
-    private List<Event> _past_events = new();
+    private readonly List<MyEvent> _published_events = new();
+    private List<MyEvent> _past_events = new();
 
-    protected void Given(params Event[] events)
+    protected void Given(params MyEvent[] events)
     {
         _past_events = events.ToList();
     }
@@ -22,7 +22,7 @@ public abstract class Command_test
         }
     }
 
-    protected void Then(params Event[] new_events)
+    protected void Then(params MyEvent[] new_events)
     {
         Assert.Equivalent(_published_events, new_events);
     }

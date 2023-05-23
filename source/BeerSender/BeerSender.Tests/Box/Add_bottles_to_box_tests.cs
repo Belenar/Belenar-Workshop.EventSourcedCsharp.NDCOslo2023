@@ -16,7 +16,7 @@ public class Add_bottle_to_box_test : Box_tests
         Given(Box_selected(6));
         When(add_beers_to_box(numberOfBottles));
         Then(Enumerable
-            .Repeat((Event)new Beer_added_to_box(new Beer("Super", Beer_size.cl_330)), expectedCountInBox).ToArray());
+            .Repeat((MyEvent)new Beer_added_to_box(new Beer("Super", Beer_size.cl_330)), expectedCountInBox).ToArray());
     }
     
     [Fact]

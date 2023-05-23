@@ -1,0 +1,23 @@
+POST https://localhost:50433/api/command
+Content-Type: application/json
+
+{
+  "$type": "Select_box_size",
+  "command": {
+    "AggregateId": "3bc0e9a8-a23a-4829-a372-eb58f4c98c71",
+	"Number_of_bottles": 24
+  }
+}
+
+###
+POST https://localhost:50433/api/command
+Content-Type: application/json
+
+{
+  "$type": "Add_label_to_box",
+  "command": {
+    "AggregateId": "3bc0e9a8-a23a-4829-a372-eb58f4c98c71",
+	"Carrier": "Posten",
+	"Tracking_code": "ABC123"
+  }
+}

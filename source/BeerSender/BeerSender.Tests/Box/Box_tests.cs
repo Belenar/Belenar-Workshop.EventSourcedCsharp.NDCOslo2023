@@ -17,23 +17,23 @@ public class Box_tests : Command_test
         return new Box_selected(new Box_size(numberOfBottles));
     }
 
-    protected Event[] too_many_beers_added_to_a_box()
+    protected MyEvent[] too_many_beers_added_to_a_box()
     {
-        var events = new List<Event> { Box_selected(numberInBox) };
+        var events = new List<MyEvent> { Box_selected(numberInBox) };
         events.AddRange(add_beers_to_box_events(numberInBox+1));
         return events.ToArray();
     }
     
-    protected Event[] right_amout_of_beers_added_to_a_box()
+    protected MyEvent[] right_amout_of_beers_added_to_a_box()
     {
-        var events = new List<Event> { Box_selected(numberInBox) };
+        var events = new List<MyEvent> { Box_selected(numberInBox) };
         events.AddRange(add_beers_to_box_events(numberInBox));
         return events.ToArray();
     }
     
-    protected Event[] too_few_beers_added_to_a_box()
+    protected MyEvent[] too_few_beers_added_to_a_box()
     {
-        var events = new List<Event> { Box_selected(numberInBox) };
+        var events = new List<MyEvent> { Box_selected(numberInBox) };
         events.AddRange(add_beers_to_box_events(numberInBox-1));
         return events.ToArray();
     }
@@ -48,9 +48,9 @@ public class Box_tests : Command_test
         return Enumerable.Repeat((Command)new Add_beer_to_box(aggregateId, "Super", "cl_330"),number_of_events_to_create).ToArray();
     }
     
-    protected Event[] add_beers_to_box_events(int number_of_events_to_create)
+    protected MyEvent[] add_beers_to_box_events(int number_of_events_to_create)
     {
-        return Enumerable.Repeat((Event)new Beer_added_to_box(new Beer("Super", Beer_size.cl_330)), number_of_events_to_create).ToArray();    
+        return Enumerable.Repeat((MyEvent)new Beer_added_to_box(new Beer("Super", Beer_size.cl_330)), number_of_events_to_create).ToArray();    
     }
     
     private const int numberInBox = 6;
