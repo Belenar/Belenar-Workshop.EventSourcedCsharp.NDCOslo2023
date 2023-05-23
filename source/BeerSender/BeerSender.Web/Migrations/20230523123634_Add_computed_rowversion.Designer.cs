@@ -3,15 +3,20 @@ using System;
 using BeerSender.Web.EventStore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
 namespace BeerSender.Web.Migrations
 {
     [DbContext(typeof(Event_context))]
-    partial class Event_contextModelSnapshot : ModelSnapshot
+    [Migration("20230523123634_Add_computed_rowversion")]
+    partial class Add_computed_rowversion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,7 +51,7 @@ namespace BeerSender.Web.Migrations
                     b.Property<long>("Row_version_long")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("bigint")
-                        .HasComputedColumnSql("CONVERT (BIGINT, [Row_version])", true);
+                        .HasComputedColumnSql("CONVERT (BIGINT, [RowVersion])", true);
 
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");

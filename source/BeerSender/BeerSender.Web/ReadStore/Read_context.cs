@@ -26,10 +26,6 @@ public class Read_context : DbContext
             .HasKey(c => c.Name);
 
         modelBuilder.Entity<Checkpoint>()
-            .Property(c => c.Last_timestamp)
-            .HasColumnType("binary(8)");
-
-        modelBuilder.Entity<Checkpoint>()
             .Property(c => c.Name)
             .HasMaxLength(64)
             .HasColumnType("varchar");
@@ -39,7 +35,7 @@ public class Read_context : DbContext
 public class Checkpoint
 {
     public string Name { get; set; }
-    public byte[] Last_timestamp { get; set; }
+    public long Last_timestamp { get; set; }
 }
 
 public class Box_status

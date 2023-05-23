@@ -12,6 +12,14 @@ public class Event_context : DbContext
     { }
 
     public DbSet<Event> Events => Set<Event>();
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Event>()
+            .Property(p => p.Row_version_long)
+            .HasComputedColumnSql("CONVERT (BIGINT, [Row_version])", stored: true); 
+        base.OnModelCreating(modelBuilder);
+    }
 }
 
 public class Event
@@ -22,6 +30,8 @@ public class Event
     [MaxLength(256)]
     public string? Payload_type { get; set; }
     public string? Payload { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+    public long Row_version_long { get; set; }
     [Timestamp]
     public byte[]? Row_version { get; set; }
 
