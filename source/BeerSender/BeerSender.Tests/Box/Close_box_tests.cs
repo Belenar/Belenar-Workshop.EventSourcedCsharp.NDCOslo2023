@@ -1,4 +1,5 @@
 using BeerSender.Domain.Box;
+using FluentAssertions;
 
 namespace BeerSender.Tests;
 
@@ -29,7 +30,10 @@ public class Close_box_tests : Box_tests
     }
 
     [Fact]
-    public void ShouldReflect()
+    public void ShouldBeAbleToGetCommands()
     {
+        var commands = CommandHelper.GetAllCommands();
+        commands.Should().BeEmpty();
+
     }
 }

@@ -1,4 +1,4 @@
-using System.Runtime.InteropServices;
+using System.Reflection;
 
 namespace BeerSender.Domain.Box;
 
@@ -7,11 +7,21 @@ public interface Command
     Guid AggregateId { get; }
 }
 
-class MyCommandAttribute : Attribute
+public static class CommandHelper
 {
-    public MyCommandAttribute(string event_name)
+    public static Dictionary<string, Type> GetAllCommands()
     {
-        
+        var assembly = Assembly.GetExecutingAssembly();
+        var types = assembly.GetTypes().Where(t => t.IsDefined(typeof(MyCommandAttribute)));
+        Dictionary<string, Type> myAttributes = new Dictionary<string, Type>();
+        foreach (var t in types)
+        {
+            var attr = (MyCommandAttribute[])Attribute.GetCustomAttributes(t, typeof(MyCommandAttribute));
+            if (attr.Length > 1)
+                throw new Exception("Should only have one CommandAttribute pr class");
+            myAttributes[attr[0].Event_name] = t;
+        }
+        return myAttributes;
     }
 }
 

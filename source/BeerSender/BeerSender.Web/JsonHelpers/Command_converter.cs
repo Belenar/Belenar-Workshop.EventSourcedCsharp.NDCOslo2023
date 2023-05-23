@@ -1,7 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using BeerSender.Domain.Box;
-using BeerSender.Web.Controllers;
 
 namespace BeerSender.Web.JsonHelpers;
 
@@ -11,15 +10,7 @@ public class Command_converter : JsonConverter<Command>
 
     static Command_converter()
     {
-        var command_types = typeof(Command)
-            .Assembly
-            .GetTypes()
-            .Where(type => !type.IsAbstract && typeof(Command).IsAssignableFrom(type));
-
-        foreach (var command_type in command_types)
-        {
-            TypeLookup[command_type.Name] = command_type;
-        }
+        TypeLookup = CommandHelper.GetAllCommands();
     }
 
     public override bool CanConvert(Type type)
