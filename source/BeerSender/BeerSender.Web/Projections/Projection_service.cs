@@ -30,6 +30,12 @@ where TProjection : Projection
             
             var events = await Read_batch(event_context, checkpoint, projection.Relevant_events);
 
+            if (events.Count == 0)
+            {
+                await Task.Delay(5000, stoppingToken);
+                continue;
+            }
+
             await using var transaction = await read_context.Database.BeginTransactionAsync(stoppingToken);
             foreach (var @event in events)
             {
@@ -52,7 +58,7 @@ where TProjection : Projection
         });
     }
 
-    private async Task<IEnumerable<Event>> Read_batch(Event_context event_context, long checkpoint, Type[] relevant_events)
+    private async Task<List<Event>> Read_batch(Event_context event_context, long checkpoint, Type[] relevant_events)
     {
         var type_list = relevant_events.Select(t => t.AssemblyQualifiedName).ToList();
 
@@ -92,5 +98,5 @@ where TProjection : Projection
 public interface Projection
 {
     Type[] Relevant_events { get; }
-    long Project(object @event);
+    long Project(Event @event);
 }
