@@ -19,14 +19,12 @@ public class Add_bottle_to_box_test : Box_tests
             .Repeat((Event)new Beer_added_to_box(new Beer("Super", Beer_size.cl_330)), expectedCountInBox).ToArray());
     }
     
-    [Theory]
-    [InlineData(7,6)]
-    [InlineData(8,6)]
-    public void Add_beer_to_box_should_have_correct_count_when_error(int numberOfBottles, int expectedCountInBox)
+    [Fact]
+    public void Add_beer_to_box_should_have_correct_count_when_error()
     {
-        Given(Box_selected(6));
-        When(add_beers_to_box(numberOfBottles));
-        Then(Enumerable.Repeat((Event)new Beer_added_to_box(new Beer("Super", Beer_size.cl_330)), expectedCountInBox).ToArray());
+        Given(right_amout_of_beers_added_to_a_box());
+        When(add_beers_to_box(1));
+        Then(new Could_not_add_beer_to_box(Box_add_failed_reason.Box_is_full));
     }
     
 

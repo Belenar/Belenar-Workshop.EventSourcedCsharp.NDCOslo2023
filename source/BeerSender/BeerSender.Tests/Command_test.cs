@@ -24,9 +24,6 @@ public abstract class Command_test
 
     protected void Then(params Event[] new_events)
     {
-        if (new_events.Length == 1)
-            _published_events[0].Should().Be(new_events[0]);
-        else
-            _published_events.Should().BeEquivalentTo(new_events, options => options.RespectingRuntimeTypes());
+        Assert.Equivalent(_published_events, new_events);
     }
 }
