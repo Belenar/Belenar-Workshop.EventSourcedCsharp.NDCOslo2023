@@ -1,4 +1,7 @@
+using BeerSender.Web.EventStore;
 using BeerSender.Web.Hubs;
+using BeerSender.Web.JsonHelpers;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,12 +11,14 @@ builder.Services.AddSignalR();
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
-        // Add JSON options here
+        options.JsonSerializerOptions.Converters.Add(new Command_converter());
     });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<Event_context>(opt => 
+    opt.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Database=Vinmonopolet;Integrated Security=True;"));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
