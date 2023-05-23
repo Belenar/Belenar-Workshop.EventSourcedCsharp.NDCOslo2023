@@ -45,7 +45,7 @@ public class Projection_service<TProjection> : BackgroundService
         }
     }
 
-    private void Save_checkpoint(byte[] checkpoint, Read_context read_context)
+    private void Save_checkpoint(long checkpoint, Read_context read_context)
     {
         read_context.Checkpoints.Update(new Checkpoint
         {
@@ -54,19 +54,20 @@ public class Projection_service<TProjection> : BackgroundService
         });
     }
 
-    private async Task<IEnumerable<Event>> Read_batch(Event_context event_context, byte[] checkpoint, Type[] relevant_events)
+    private async Task<IEnumerable<Event>> Read_batch(Event_context event_context, long checkpoint, Type[] relevant_events)
     {
         var type_list = relevant_events.Select(t => t.AssemblyQualifiedName).ToList();
         var batch = await event_context.Events
             .Where(e => type_list.Contains(e.Payload_type))
-            .Where(e => e.Row_version_long > BitConverter.ToInt64(checkpoint))
+            .Where(e => e.Row_version_long > checkpoint)
+            .OrderBy(e => e.Row_version_long)
             .Take(Batch_size)
             .ToListAsync();
         
         return batch;
     }
 
-    private byte[] Get_checkpoint()
+    private long Get_checkpoint()
     {
         using var scope = _serviceProvider.CreateScope();
         using var read_context = scope.ServiceProvider.GetRequiredService<Read_context>();
@@ -79,7 +80,7 @@ public class Projection_service<TProjection> : BackgroundService
             checkpoint = new Checkpoint
             {
                 Name = projection_name,
-                Last_timestamp = new byte[8],
+                Last_timestamp = 0,
             };
             read_context.Checkpoints.Add(checkpoint);
             read_context.SaveChanges();
@@ -92,5 +93,5 @@ public class Projection_service<TProjection> : BackgroundService
 public interface Projection
 {
     Type[] Relevant_events { get; }
-    byte[] Project(object @event);
+    long Project(object @event);
 }
