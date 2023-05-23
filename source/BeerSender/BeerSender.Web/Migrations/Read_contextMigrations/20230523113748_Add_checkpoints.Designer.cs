@@ -4,6 +4,7 @@ using BeerSender.Web.ReadStore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeerSender.Web.Migrations.Read_contextMigrations
 {
     [DbContext(typeof(Read_context))]
-    partial class Read_contextModelSnapshot : ModelSnapshot
+    [Migration("20230523113748_Add_checkpoints")]
+    partial class Add_checkpoints
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
