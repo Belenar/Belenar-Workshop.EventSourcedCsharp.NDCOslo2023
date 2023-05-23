@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json;
+using BeerSender.Web.JsonConverters;
 using Microsoft.EntityFrameworkCore;
 
 namespace BeerSender.Web.EventStore;
@@ -32,7 +33,11 @@ public class Event
             if (_event == null)
             {
                 var type = Type.GetType(Payload_type!);
-                _event = JsonSerializer.Deserialize(Payload!, type!);
+                var options = new JsonSerializerOptions
+                {
+                    TypeInfoResolver = new PrivateConstructorContractResolver()
+                };
+                _event = JsonSerializer.Deserialize(Payload!, type!, options);
             }
 
             return _event;

@@ -2,10 +2,12 @@
 
 namespace BeerSender.Domain.Box;
 
-public record Shipping_label
+public class Shipping_label
 {
-    public Carrier Carrier { get; }
-    public string Tracking_code { get; }
+    public Carrier Carrier { get; private set; }
+    public string Tracking_code { get; private set;  }
+
+    private Shipping_label() { }
 
     private Shipping_label(Carrier carrier, string tracking_code)
     {

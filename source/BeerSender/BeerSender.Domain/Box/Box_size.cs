@@ -4,7 +4,9 @@ namespace BeerSender.Domain.Box;
 
 public class Box_size
 {
-    public int Number_of_bottles { get; }
+    public int Number_of_bottles { get; private set; }
+
+    private Box_size(){}
 
     private Box_size(int number_of_bottles)
     {
