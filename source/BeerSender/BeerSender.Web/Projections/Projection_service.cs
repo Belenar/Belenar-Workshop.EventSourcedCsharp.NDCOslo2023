@@ -59,7 +59,7 @@ public class Projection_service<TProjection> : BackgroundService
         var type_list = relevant_events.Select(t => t.AssemblyQualifiedName).ToList();
         var batch = await event_context.Events
             .Where(e => type_list.Contains(e.Payload_type))
-            .Where(e => BitConverter.ToInt64(e.Row_version) > BitConverter.ToInt64(checkpoint))
+            .Where(e => e.Row_version_long > BitConverter.ToInt64(checkpoint))
             .Take(Batch_size)
             .ToListAsync();
         
