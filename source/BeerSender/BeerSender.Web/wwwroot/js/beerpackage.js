@@ -17,14 +17,17 @@ connection.start().then(function () {
 
 document.getElementById("createPackage").addEventListener("click", function (event) {
     var aggregate_id = document.getElementById("package_id_input").value;
+    var number_of_bottles = +(document.getElementById("number_of_bottles_input").value);
+
     connection.invoke("subscribe_to_aggregate", aggregate_id).catch(function (err) {
         return console.error(err.toString());
     });
 
     var command = {
-        "$type": "CreatePackage",
+        "$type": "Select_box_size",
         "command": {
-            "Aggregate_id": aggregate_id
+            "AggregateId": aggregate_id,
+            "Number_of_bottles": number_of_bottles
         }
     }
     postCommand(command);
@@ -35,12 +38,14 @@ document.getElementById("createPackage").addEventListener("click", function (eve
 document.getElementById("addLabel").addEventListener("click", function (event) {
     var aggregate_id = document.getElementById("package_id_input").value;
     var package_label = document.getElementById("label_input").value;
+    var package_carrier = document.getElementById("carrier_input").value;
 
     var command = {
-        "$type": "AddLabel",
+        "$type": "Add_shipping_label",
         "command": {
-            "Aggregate_id": aggregate_id,
-            "Label": package_label
+            "AggregateId": aggregate_id,
+            "Carrier": package_carrier,
+            "Tracking_code": package_label
         }
     }
     postCommand(command);

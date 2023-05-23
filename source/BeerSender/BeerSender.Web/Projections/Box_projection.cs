@@ -34,7 +34,6 @@ public class Box_projection : Projection
                 Add_beer(@event.Aggregate_id, beer_added);
                 break;
         }
-        _db_context.SaveChanges();
         return @event.Row_version_long;
     }
 
