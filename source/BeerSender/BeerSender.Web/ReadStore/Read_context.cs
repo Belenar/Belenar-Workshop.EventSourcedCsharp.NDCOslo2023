@@ -9,6 +9,7 @@ public class Read_context : DbContext
 
     public DbSet<Box_status> Boxes => Set<Box_status>();
     public DbSet<Box_bottle> Bottles => Set<Box_bottle>();
+    public DbSet<Checkpoint> Checkpoints => Set<Checkpoint>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -20,7 +21,25 @@ public class Read_context : DbContext
             .WithMany(box => box.Bottles)
             .HasPrincipalKey(box => box.Aggregate_id)
             .HasForeignKey(bottle => bottle.Box_id);
+
+        modelBuilder.Entity<Checkpoint>()
+            .HasKey(c => c.Name);
+
+        modelBuilder.Entity<Checkpoint>()
+            .Property(c => c.Last_timestamp)
+            .HasColumnType("binary(8)");
+
+        modelBuilder.Entity<Checkpoint>()
+            .Property(c => c.Name)
+            .HasMaxLength(64)
+            .HasColumnType("varchar");
     }
+}
+
+public class Checkpoint
+{
+    public string Name { get; set; }
+    public byte[] Last_timestamp { get; set; }
 }
 
 public class Box_status

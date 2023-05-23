@@ -19,4 +19,8 @@
     <ProjectReference Include="..\BeerSender.Domain\BeerSender.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Projections\" />
+  </ItemGroup>
+
 </Project>
