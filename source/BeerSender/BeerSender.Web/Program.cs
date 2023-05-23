@@ -2,6 +2,7 @@ using BeerSender.Domain;
 using BeerSender.Web.EventStore;
 using BeerSender.Web.Hubs;
 using BeerSender.Web.JsonHelpers;
+using BeerSender.Web.Projections;
 using BeerSender.Web.ReadStore;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,6 +31,9 @@ builder.Services.AddScoped<Command_router>(provider =>
     var event_service = provider.GetRequiredService<Event_service>();
     return new Command_router(event_service.GetEvents, event_service.WriteEvent);
 });
+
+builder.Services.AddScoped<Box_projection>();
+builder.Services.AddHostedService<Projection_service<Box_projection>>();
 
 var app = builder.Build();
 

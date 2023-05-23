@@ -18,7 +18,7 @@ public class Projection_service<TProjection> : BackgroundService
         _serviceProvider = serviceProvider;
     }
 
-    protected async override Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         var checkpoint = Get_checkpoint();
 
@@ -31,6 +31,12 @@ public class Projection_service<TProjection> : BackgroundService
             var projection = scope.ServiceProvider.GetRequiredService<TProjection>();
 
             var events = await Read_batch(event_context, checkpoint, projection.Relevant_events);
+
+            if (events.Count == 0)
+            {
+                await Task.Delay(5000, stoppingToken);
+                continue;
+            }
 
             await using var transaction = await read_context.Database.BeginTransactionAsync(stoppingToken);
             foreach (var @event in events)
@@ -54,7 +60,7 @@ public class Projection_service<TProjection> : BackgroundService
         });
     }
 
-    private async Task<IEnumerable<Event>> Read_batch(Event_context event_context, long checkpoint, Type[] relevant_events)
+    private async Task<List<Event>> Read_batch(Event_context event_context, long checkpoint, Type[] relevant_events)
     {
         var type_list = relevant_events.Select(t => t.AssemblyQualifiedName).ToList();
         var batch = await event_context.Events
@@ -93,5 +99,5 @@ public class Projection_service<TProjection> : BackgroundService
 public interface Projection
 {
     Type[] Relevant_events { get; }
-    long Project(object @event);
+    long Project(Event @event);
 }
