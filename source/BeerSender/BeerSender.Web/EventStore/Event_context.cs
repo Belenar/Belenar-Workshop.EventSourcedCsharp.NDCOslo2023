@@ -1,4 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json;
+using BeerSender.Web.JsonHelpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 
@@ -22,5 +25,31 @@ public class Event
     public string? Payload_type { get; set; }
     public string? Payload { get; set; }
     [Timestamp]
-    public byte[] RowVersion { get; set; }
+    public byte[] Row_version { get; set; }
+
+    private object? _event;
+
+    [NotMapped]
+    public object Object
+    {
+        get
+        {
+            if (_event == null)
+            {
+                var type = Type.GetType(Payload_type!);
+                _event = JsonSerializer.Deserialize(Payload!, type!, new JsonSerializerOptions
+                {
+                    TypeInfoResolver = new PrivateConstructorContractResolver()
+                });
+            }
+
+            return _event;
+        }
+        set
+        {
+            _event = value;
+            Payload_type = value.GetType().AssemblyQualifiedName;
+            Payload = JsonSerializer.Serialize(value);
+        }
+    }
 }

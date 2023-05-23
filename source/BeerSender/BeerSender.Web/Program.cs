@@ -1,3 +1,4 @@
+using BeerSender.Domain;
 using BeerSender.Web.EventStore;
 using BeerSender.Web.Hubs;
 using BeerSender.Web.JsonHelpers;
@@ -19,6 +20,14 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<Event_context>(opt => 
     opt.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Database=Vinmonopolet;Integrated Security=True;"));
+
+builder.Services.AddScoped<Event_service, Event_service_implementation>();
+builder.Services.AddScoped<Command_router>(provider =>
+{
+    var event_service = provider.GetRequiredService<Event_service>();
+    return new Command_router(event_service.GetEvents, event_service.WriteEvent);
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
